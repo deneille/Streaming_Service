@@ -1,0 +1,51 @@
+﻿userName,accid,regName
+a,1,Canada
+a,2,United States
+a,3,Serbia
+a,4,Croatia
+a,5,Bosnia
+a,6,Montenegro
+a,7,Slovenia
+a,8,Bulgaria
+b,1,Macedonia
+b,2,Hungary
+b,3,Canada
+b,4,United States
+b,5,Serbia
+b,6,Croatia
+b,7,Bosnia
+b,8,Montenegro
+c,1,Slovenia
+c,2,Bulgaria
+c,3,Macedonia
+c,4,Hungary
+d,5,Canada
+d,6,United States
+d,7,Serbia
+d,8,Croatia
+e,1,Bosnia
+e,2,Montenegro
+e,3,Slovenia
+e,4,Bulgaria
+f,5,Macedonia
+f,6,Hungary
+f,7,Canada
+f,8,United States
+g,1,Serbia
+g,2,Croatia
+g,3,Bosnia
+h,4,Montenegro
+h,5,Slovenia
+i,6,Bulgaria
+i,7,Macedonia
+i,8,Hungary
+i,1,Canada
+i,2,United States
+i,3,Serbia
+j,4,Croatia
+j,5,Bosnia
+j,6,Montenegro
+k,7,Slovenia
+k,8,Bulgaria
+l,9,Macedonia
+l,10,Hungary

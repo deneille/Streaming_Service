@@ -1,0 +1,50 @@
+ mid 
+-----
+   2
+(1 row)
+
+UPDATE 1
+ mid 
+-----
+   2
+(1 row)
+
+ accid 
+-------
+     1
+   123
+(2 rows)
+
+DELETE 0
+ accid 
+-------
+     1
+   123
+(2 rows)
+
+ username | accid | mid 
+----------+-------+-----
+ bobby    |   123 |  75
+ Basta    |     1 |   1
+(2 rows)
+
+INSERT 0 0
+ username | accid | mid 
+----------+-------+-----
+ bobby    |   123 |  75
+ Basta    |     1 |   1
+(2 rows)
+
+ username | accid | mid 
+----------+-------+-----
+ bobby    |   123 |  75
+ Basta    |     1 |   1
+(2 rows)
+
+DELETE 0
+ username | accid | mid 
+----------+-------+-----
+ bobby    |   123 |  75
+ Basta    |     1 |   1
+(2 rows)
+

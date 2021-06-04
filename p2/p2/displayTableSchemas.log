@@ -1,0 +1,162 @@
+\d Account
+   Table "cs421g46.account"
+ Column |  Type   | Modifiers 
+--------+---------+-----------
+ accid  | integer | not null
+Indexes:
+    "account_pkey" PRIMARY KEY, btree (accid)
+Referenced by:
+    TABLE "accountuser" CONSTRAINT "accountuser_accid_fkey" FOREIGN KEY (accid) REFERENCES account(accid)
+    TABLE "payment" CONSTRAINT "payment_accid_fkey" FOREIGN KEY (accid) REFERENCES account(accid)
+    TABLE "queues" CONSTRAINT "queues_accid_fkey" FOREIGN KEY (accid) REFERENCES account(accid)
+
+\d Payment
+       Table "cs421g46.payment"
+ Column |       Type       | Modifiers 
+--------+------------------+-----------
+ pid    | integer          | not null
+ date   | date             | not null
+ amount | double precision | not null
+ accid  | integer          | not null
+Indexes:
+    "payment_pkey" PRIMARY KEY, btree (pid)
+Foreign-key constraints:
+    "payment_accid_fkey" FOREIGN KEY (accid) REFERENCES account(accid)
+
+\d Region
+           Table "cs421g46.region"
+ Column  |         Type          | Modifiers 
+---------+-----------------------+-----------
+ regname | character varying(30) | not null
+Indexes:
+    "region_pkey" PRIMARY KEY, btree (regname)
+Referenced by:
+    TABLE "accountuser" CONSTRAINT "accountuser_regname_fkey" FOREIGN KEY (regname) REFERENCES region(regname)
+    TABLE "available_in" CONSTRAINT "available_in_regname_fkey" FOREIGN KEY (regname) REFERENCES region(regname)
+
+\d Tag
+            Table "cs421g46.tag"
+ Column  |         Type          | Modifiers 
+---------+-----------------------+-----------
+ tid     | integer               | not null
+ tagname | character varying(30) | not null
+Indexes:
+    "tag_pkey" PRIMARY KEY, btree (tid)
+Referenced by:
+    TABLE "describes" CONSTRAINT "describes_tid_fkey" FOREIGN KEY (tid) REFERENCES tag(tid)
+
+\d Media
+             Table "cs421g46.media"
+   Column    |         Type          | Modifiers 
+-------------+-----------------------+-----------
+ mid         | integer               | not null
+ title       | character varying(30) | not null
+ releaseyear | integer               | 
+ iscomplete  | boolean               | 
+Indexes:
+    "media_pkey" PRIMARY KEY, btree (mid)
+Referenced by:
+    TABLE "available_in" CONSTRAINT "available_in_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+    TABLE "describes" CONSTRAINT "describes_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+    TABLE "queues" CONSTRAINT "queues_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+    TABLE "rating" CONSTRAINT "rating_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+    TABLE "season" CONSTRAINT "season_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+
+\d AccountUser
+         Table "cs421g46.accountuser"
+  Column  |         Type          | Modifiers 
+----------+-----------------------+-----------
+ username | character varying(30) | not null
+ accid    | integer               | not null
+ regname  | character varying(30) | not null
+Indexes:
+    "accountuser_pkey" PRIMARY KEY, btree (username, accid)
+Foreign-key constraints:
+    "accountuser_accid_fkey" FOREIGN KEY (accid) REFERENCES account(accid)
+    "accountuser_regname_fkey" FOREIGN KEY (regname) REFERENCES region(regname)
+Referenced by:
+    TABLE "rating" CONSTRAINT "rating_username_fkey" FOREIGN KEY (username, accid) REFERENCES accountuser(username, accid)
+
+\d Season
+     Table "cs421g46.season"
+  Column   |  Type   | Modifiers 
+-----------+---------+-----------
+ seasonnum | integer | not null
+ mid       | integer | not null
+Indexes:
+    "season_pkey" PRIMARY KEY, btree (seasonnum, mid)
+Check constraints:
+    "season_seasonnum_check" CHECK (seasonnum > 0)
+Foreign-key constraints:
+    "season_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+Referenced by:
+    TABLE "episode" CONSTRAINT "episode_seasonnum_fkey" FOREIGN KEY (seasonnum, mid) REFERENCES season(seasonnum, mid)
+
+\d Episode
+           Table "cs421g46.episode"
+  Column   |         Type          | Modifiers 
+-----------+-----------------------+-----------
+ epnum     | integer               | not null
+ seasonnum | integer               | not null
+ mid       | integer               | not null
+ eptitle   | character varying(30) | not null
+Indexes:
+    "episode_pkey" PRIMARY KEY, btree (epnum, seasonnum, mid)
+Check constraints:
+    "episode_epnum_check" CHECK (epnum > 0)
+Foreign-key constraints:
+    "episode_seasonnum_fkey" FOREIGN KEY (seasonnum, mid) REFERENCES season(seasonnum, mid)
+
+\d Rating
+           Table "cs421g46.rating"
+  Column  |         Type          | Modifiers 
+----------+-----------------------+-----------
+ mid      | integer               | not null
+ username | character varying(30) | not null
+ accid    | integer               | not null
+ value    | integer               | not null
+Indexes:
+    "rating_pkey" PRIMARY KEY, btree (mid, username, accid)
+Check constraints:
+    "rating_value_check" CHECK (value >= 1 AND value <= 5)
+Foreign-key constraints:
+    "rating_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+    "rating_username_fkey" FOREIGN KEY (username, accid) REFERENCES accountuser(username, accid)
+
+\d available_in
+        Table "cs421g46.available_in"
+ Column  |         Type          | Modifiers 
+---------+-----------------------+-----------
+ mid     | integer               | not null
+ regname | character varying(30) | not null
+Indexes:
+    "available_in_pkey" PRIMARY KEY, btree (mid, regname)
+Foreign-key constraints:
+    "available_in_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+    "available_in_regname_fkey" FOREIGN KEY (regname) REFERENCES region(regname)
+
+\d queues
+           Table "cs421g46.queues"
+  Column  |         Type          | Modifiers 
+----------+-----------------------+-----------
+ username | character varying(30) | not null
+ accid    | integer               | not null
+ mid      | integer               | not null
+Indexes:
+    "queues_pkey" PRIMARY KEY, btree (username, accid, mid)
+Foreign-key constraints:
+    "queues_accid_fkey" FOREIGN KEY (accid) REFERENCES account(accid)
+    "queues_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+
+\d describes
+  Table "cs421g46.describes"
+ Column |  Type   | Modifiers 
+--------+---------+-----------
+ mid    | integer | not null
+ tid    | integer | not null
+Indexes:
+    "describes_pkey" PRIMARY KEY, btree (mid, tid)
+Foreign-key constraints:
+    "describes_mid_fkey" FOREIGN KEY (mid) REFERENCES media(mid)
+    "describes_tid_fkey" FOREIGN KEY (tid) REFERENCES tag(tid)
+

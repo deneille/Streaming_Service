@@ -1,0 +1,20 @@
+INSERT INTO Media VALUES (1, 'The Man Who Pooped', 2000, NULL);
+INSERT 0 1
+INSERT INTO Media VALUES (2, 'He Poops Again!', 2002, NULL);
+INSERT 0 1
+INSERT INTO Media VALUES (3, 'Poopman: One Last Poop', 2003, NULL);
+INSERT 0 1
+INSERT INTO Media VALUES (4, 'The Return of the Poopman', 2005, NULL);
+INSERT 0 1
+INSERT INTO Media VALUES (5, 'Poopman: Animated Series', NULL, FALSE);
+INSERT 0 1
+SELECT * FROM Media;
+ mid |           title           | releaseyear | iscomplete 
+-----+---------------------------+-------------+------------
+   1 | The Man Who Pooped        |        2000 | 
+   2 | He Poops Again!           |        2002 | 
+   3 | Poopman: One Last Poop    |        2003 | 
+   4 | The Return of the Poopman |        2005 | 
+   5 | Poopman: Animated Series  |             | f
+(5 rows)
+
